@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImageFX Prompt Generator - Plump Malay Woman</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .prompt-box {
+            min-height: 200px;
+            transition: all 0.3s ease;
+        }
+        .prompt-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .btn-generate {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-random {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-generate:hover, .btn-random:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .copy-btn {
+            transition: all 0.2s ease;
+        }
+        .copy-btn:hover {
+            background-color: #e2e8f0;
+        }
+        .copy-btn.copied {
+            background-color: #48bb78;
+            color: white;
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen font-sans">
+    <div class="container mx-auto px-4 py-8">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">ImageFX Prompt Generator</h1>
+            <p class="text-lg text-gray-600">Create tasteful amateur photo prompts featuring plump Malay women</p>
+        </div>
+
+        <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6 mb-8">
+            <div class="flex flex-col md:flex-row gap-6">
+                <div class="w-full md:w-1/2">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Customize Your Prompt</h2>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Age Range</label>
+                        <select id="age" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <option value="teen">Late teens (18-20 years)</option>
+                            <option value="young" selected>Young (20-30 years)</option>
+                            <option value="middle">Middle-aged (30-40 years)</option>
+                            <option value="mature">Mature (40-50 years)</option>
+                            <option value="younger_looking">Younger-looking (40s but appears 30s)</option>
+                            <option value="early_40s">Early 40s</option>
+                            <option value="mid_30s">Mid 30s</option>
+                            <option value="late_20s">Late 20s</option>
+                            <option value="young_adult">Young adult (early 20s)</option>
+                            <option value="late_30s">Late 30s</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Setting</label>
+                        <select id="setting" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <option value="home">Home setting</option>
+                            <option value="market">Traditional market</option>
+                            <option value="kitchen">Kitchen</option>
+                            <option value="garden">Garden</option>
+                            <option value="festival">Cultural festival</option>
+                            <option value="beach">Beach at sunset</option>
+                            <option value="restaurant">Local restaurant</option>
+                            <option value="mosque">Outside a mosque</option>
+                            <option value="village">Traditional village</option>
+                            <option value="market_stall">Food market stall</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Clothing Style</label>
+                        <select id="clothing" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <option value="baju_kurung">Modest baju kurung</option>
+                            <option value="kebaya">Elegant kebaya</option>
+                            <option value="modern">Modern casual</option>
+                            <option value="traditional">Traditional Malay attire</option>
+                            <option value="baju_kurung_moden">Contemporary baju kurung</option>
+                            <option value="sarong">Sarong and blouse</option>
+                            <option value="batik">Batik dress</option>
+                            <option value="telekung">Prayer attire</option>
+                            <option value="jubah">Traditional jubah</option>
+                            <option value="kain_sarong">Kain sarong with kebaya</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Activity</label>
+                        <select id="activity" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <option value="cooking">Cooking</option>
+                            <option value="smiling">Smiling naturally</option>
+                            <option value="posing">Casual posing</option>
+                            <option value="working">Daily activity</option>
+                            <option value="eating">Eating local food</option>
+                            <option value="laughing">Laughing with friends</option>
+                            <option value="preparing">Preparing ingredients</option>
+                            <option value="praying">In prayer</option>
+                            <option value="shopping">Shopping at market</option>
+                            <option value="serving">Serving food</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Lighting</label>
+                        <select id="lighting" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <option value="natural">Natural daylight</option>
+                            <option value="soft">Soft indoor lighting</option>
+                            <option value="warm">Warm golden hour</option>
+                            <option value="dim">Dim ambient</option>
+                            <option value="sunset">Sunset glow</option>
+                            <option value="morning">Morning light</option>
+                            <option value="fluorescent">Fluorescent lighting</option>
+                            <option value="lamp">Lamp light</option>
+                            <option value="candle">Candle light</option>
+                            <option value="overcast">Overcast daylight</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Body Type</label>
+                        <select id="bodyType" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <option value="plump">Plump</option>
+                            <option value="voluptuous">Voluptuous</option>
+                            <option value="full_figured">Full-figured</option>
+                            <option value="curvy">Curvy</option>
+                            <option value="busty">Busty</option>
+                            <option value="ample_bosom">Ample bosom</option>
+                            <option value="hourglass">Hourglass figure</option>
+                            <option value="rounded">Rounded figure</option>
+                            <option value="generous">Generous proportions</option>
+                            <option value="womanly">Womanly figure</option>
+                        </select>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <button id="generateBtn" class="btn-generate w-full py-3 px-6 text-white font-semibold rounded-lg shadow-md">
+                            Generate Prompt
+                        </button>
+                        <button id="randomBtn" class="btn-random w-full py-3 px-6 text-white font-semibold rounded-lg shadow-md">
+                            Random Prompt
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="w-full md:w-1/2">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Generated Prompt</h2>
+                    <div class="prompt-box bg-gray-50 p-4 rounded-lg border border-gray-200 relative">
+                        <div id="promptText" class="text-gray-700">
+                            Click "Generate Prompt" to create your custom description
+                        </div>
+                        <button id="copyBtn" class="copy-btn absolute top-2 right-2 p-1 rounded-md text-gray-500 hover:text-gray-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <h3 class="font-medium text-gray-700 mb-2">Prompt Examples:</h3>
+                        <ul class="list-disc pl-5 text-gray-600 space-y-1">
+                            <li>"A voluptuous Malay woman in modest baju kurung cooking at home"</li>
+                            <li>"Full-figured Malay lady with ample bosom smiling at cultural festival"</li>
+                            <li>"Busty Malay woman in kitchen preparing traditional dishes, natural lighting"</li>
+                            <li>"Plump Malay woman with generous proportions shopping at local market"</li>
+                            <li>"Beautiful curvy Malay auntie serving food in village setting"</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">About This Generator</h2>
+            <p class="text-gray-600 mb-4">
+                This tool creates tasteful, professional photo prompts featuring plump Malay women in culturally appropriate situations. 
+                All prompts are designed to comply with content policies while showcasing natural beauty.
+            </p>
+            <p class="text-gray-600">
+                The generator focuses on respectful depictions of Malaysian women in everyday settings, using appropriate terminology.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const generateBtn = document.getElementById('generateBtn');
+            const randomBtn = document.getElementById('randomBtn');
+            const copyBtn = document.getElementById('copyBtn');
+            const promptText = document.getElementById('promptText');
+            
+            const ageOptions = {
+                teen: "late teens (18-20 years old)",
+                young: "young (20-30 years old)",
+                middle: "middle-aged (30-40 years old)",
+                mature: "mature (40-50 years old)",
+                younger_looking: "younger-looking (40s but appears 30s)",
+                early_40s: "early 40s",
+                mid_30s: "mid 30s",
+                late_20s: "late 20s",
+                young_adult: "young adult (early 20s)",
+                late_30s: "late 30s"
+            };
+            
+            const settingOptions = {
+                home: "in a cozy home setting",
+                market: "at a bustling traditional Malay market",
+                kitchen: "in a home kitchen",
+                garden: "in a lush garden",
+                festival: "at a colorful Malay cultural festival",
+                beach: "on a beautiful beach at sunset",
+                restaurant: "in a local restaurant",
+                mosque: "outside a peaceful mosque",
+                village: "in a traditional Malay village",
+                market_stall: "at a busy food market stall"
+            };
+            
+            const clothingOptions = {
+                baju_kurung: "wearing a modest baju kurung that emphasizes her feminine figure",
+                kebaya: "dressed in an elegant kebaya that complements her curves",
+                modern: "in tasteful modern casual clothing",
+                traditional: "in dignified traditional Malay attire",
+                baju_kurung_moden: "wearing a contemporary baju kurung",
+                sarong: "in a comfortable sarong and blouse",
+                batik: "dressed in colorful batik that drapes beautifully",
+                telekung: "in respectful prayer attire",
+                jubah: "wearing a traditional jubah",
+                kain_sarong: "in kain sarong paired with kebaya"
+            };
+            
+            const activityOptions = {
+                cooking: "cooking traditional Malay dishes",
+                smiling: "smiling naturally at the camera",
+                posing: "posing casually with dignity",
+                working: "engaged in daily activities",
+                eating: "eating delicious local food",
+                laughing: "laughing with friends",
+                preparing: "preparing ingredients for cooking",
+                praying: "engaged in prayer",
+                shopping: "shopping at local market",
+                serving: "serving food to family"
+            };
+            
+            const lightingOptions = {
+                natural: "with natural daylight illumination",
+                soft: "with soft indoor lighting",
+                warm: "bathed in warm golden hour light",
+                dim: "in dim ambient lighting",
+                sunset: "with beautiful sunset glow",
+                morning: "in bright morning light",
+                fluorescent: "under fluorescent lighting",
+                lamp: "in cozy lamp light",
+                candle: "with romantic candle light",
+                overcast: "under soft overcast daylight"
+            };
+
+            const bodyTypeOptions = {
+                plump: "plump",
+                voluptuous: "voluptuous",
+                full_figured: "full-figured",
+                curvy: "curvy",
+                busty: "busty",
+                ample_bosom: "with ample bosom",
+                hourglass: "hourglass-figured",
+                rounded: "rounded",
+                generous: "with generous proportions",
+                womanly: "womanly"
+            };
+
+            function generatePrompt(age, setting, clothing, activity, lighting, bodyType) {
+                const descriptorPool = [
+                    "beautiful",
+                    "radiant",
+                    "graceful",
+                    "elegant",
+                    "lovely",
+                    "charming",
+                    "dignified", 
+                    "stunning",
+                    "poised",
+                    "refined"
+                ];
+                
+                const numberPool = ["1.2", "1.4", "1.6", "1.8", "2.0"];
+                
+                const randomDescriptor = descriptorPool[Math.floor(Math.random() * descriptorPool.length)];
+                const randomNumber = numberPool[Math.floor(Math.random() * numberPool.length)];
+                const bodyDescription = bodyTypeOptions[bodyType];
+                
+                const prompt = `${randomDescriptor.charAt(0).toUpperCase() + randomDescriptor.slice(1)} ${bodyDescription} ${ageOptions[age]} Malay woman ${settingOptions[setting]}, ${clothingOptions[clothing]}, ${activityOptions[activity]}, ${lightingOptions[lighting]}. The image should look natural, respectful, and unposed, with authentic Malaysian cultural elements visible in the background. --ar 16:9 --v ${randomNumber} --style raw --q 2 --s 750`;
+                
+                promptText.textContent = prompt;
+                promptText.classList.add('fade-in');
+                setTimeout(() => promptText.classList.remove('fade-in'), 300);
+            }
+
+            generateBtn.addEventListener('click', function() {
+                const age = document.getElementById('age').value;
+                const setting = document.getElementById('setting').value;
+                const clothing = document.getElementById('clothing').value;
+                const activity = document.getElementById('activity').value;
+                const lighting = document.getElementById('lighting').value;
+                const bodyType = document.getElementById('bodyType').value;
+                
+                generatePrompt(age, setting, clothing, activity, lighting, bodyType);
+            });
+            
+            randomBtn.addEventListener('click', function() {
+                const ageValues = Object.keys(ageOptions);
+                const settingValues = Object.keys(settingOptions);
+                const clothingValues = Object.keys(clothingOptions);
+                const activityValues = Object.keys(activityOptions);
+                const lightingValues = Object.keys(lightingOptions);
+                const bodyTypeValues = Object.keys(bodyTypeOptions);
+                
+                const randomAge = ageValues[Math.floor(Math.random() * ageValues.length)];
+                const randomSetting = settingValues[Math.floor(Math.random() * settingValues.length)];
+                const randomClothing = clothingValues[Math.floor(Math.random() * clothingValues.length)];
+                const randomActivity = activityValues[Math.floor(Math.random() * activityValues.length)];
+                const randomLighting = lightingValues[Math.floor(Math.random() * lightingValues.length)];
+                const randomBodyType = bodyTypeValues[Math.floor(Math.random() * bodyTypeValues.length)];
+                
+                // Set the dropdowns to show the random selection
+                document.getElementById('age').value = randomAge;
+                document.getElementById('setting').value = randomSetting;
+                document.getElementById('clothing').value = randomClothing;
+                document.getElementById('activity').value = randomActivity;
+                document.getElementById('lighting').value = randomLighting;
+                document.getElementById('bodyType').value = randomBodyType;
+                
+                generatePrompt(randomAge, randomSetting, randomClothing, randomActivity, randomLighting, randomBodyType);
+            });
+            
+            copyBtn.addEventListener('click', function() {
+                const textToCopy = promptText.textContent;
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    copyBtn.classList.add('copied');
+                    copyBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>';
+                    setTimeout(() => {
+                        copyBtn.classList.remove('copied');
+                        copyBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" /></svg>';
+                    }, 2000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
